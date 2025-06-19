@@ -24,3 +24,25 @@ const ActivitySelectionComplete = () => {
       return include;
     }
   };
+
+  // Função iterativa baseada no código original
+  const activitySelection = (starts, finishes) => {
+    // Combina as listas de inícios e términos em uma lista de tuplas (início e término)
+    const activities = starts.map((s, i) => [s, finishes[i]]);
+    // Ordena as atividades pelo tempo de término em ordem crescente
+    activities.sort((a, b) => a[1] - b[1]);
+    
+    const selected = [];
+    let lastFinish = -1;
+    
+    // Itera sobre cada atividade ordenada
+    for (const [s, f] of activities) {
+      // Verifica se a atividade atual começa após a última selecionada ter terminado
+      if (s >= lastFinish) {
+        selected.push([s, f]);
+        lastFinish = f;
+      }
+    }
+    
+    return selected;
+  };
