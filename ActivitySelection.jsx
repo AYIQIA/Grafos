@@ -46,3 +46,21 @@ const ActivitySelectionComplete = () => {
     
     return selected;
   };
+
+  // Executa ambos os algoritmos
+  const selectedIterative = activitySelection(starts, finishes);
+  
+  // Pré-processa ordenando por tempo de término para o recursivo
+  const activities = starts.map((s, i) => [s, finishes[i]]).sort((a, b) => a[1] - b[1]);
+  const sortedStarts = activities.map(a => a[0]);
+  const sortedFinishes = activities.map(a => a[1]);
+  const selectedRecursive = activitySelectionRecursive(sortedStarts, sortedFinishes);
+
+  const maxTime = Math.max(...finishes) + 1;
+  const yLevel = 1;
+  const height = 30;
+
+  // Verifica se uma atividade foi selecionada
+  const isSelected = (start, finish) => {
+    return selectedIterative.some(([s, f]) => s === start && f === finish);
+  };
